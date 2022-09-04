@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
-class NoteSceen extends StatelessWidget {
-  const NoteSceen({Key? key, required this.headingText, required this.bodyText}) : super(key: key);
+class NoteScreen extends StatelessWidget {
+  const NoteScreen(
+      {Key? key, required this.headingText, required this.bodyText})
+      : super(key: key);
 
   final String headingText;
   final String bodyText;
@@ -11,59 +13,62 @@ class NoteSceen extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    GestureDetector(onTap: (){Navigator.pop(context);},
-                      child: Container(
-                        height: 50,
-                        width: 50,
-                        decoration: BoxDecoration(
-                            color: const Color(0xFF3B3B3B),
-                            borderRadius: BorderRadius.circular(10)),
-                        child: const Center(
-                          child: Icon(
-                            Icons.arrow_back_ios_new_rounded,
-                            size: 20,
-                          ),
-                        ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                    height: 50,
+                    width: 50,
+                    decoration: BoxDecoration(
+                        color: const Color(0xFF3B3B3B),
+                        borderRadius: BorderRadius.circular(10)),
+                    child: const Center(
+                      child: Icon(
+                        Icons.arrow_back_ios_new_rounded,
+                        size: 20,
                       ),
                     ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                Text(headingText,style: TextStyle(fontSize: 40, fontWeight: FontWeight.w600)),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: Text(
-                    getDateTime(DateTime.now()),
-                    style: const TextStyle(
-                        color: Color(0x59FFFFFF),
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600),
                   ),
-                ),
-                Expanded(
-                  child: Text(bodyText,style: TextStyle(
-                    fontSize: 20,
-                  ),)
                 ),
               ],
             ),
-          )),
+            const SizedBox(
+              height: 30,
+            ),
+            Text(headingText,
+                style:
+                    const TextStyle(fontSize: 40, fontWeight: FontWeight.w600)),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                getDateTime(DateTime.now()),
+                style: const TextStyle(
+                    color: Color(0x59FFFFFF),
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600),
+              ),
+            ),
+            Expanded(
+                child: Text(
+              bodyText,
+              style: const TextStyle(
+                fontSize: 20,
+              ),
+            )),
+          ],
+        ),
+      )),
     );
   }
 }
-
-
-
-
 
 String getDateTime(DateTime noteDate) {
   String? month;

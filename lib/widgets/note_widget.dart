@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:notes_dev/screens/note_screen.dart';
@@ -27,14 +25,13 @@ class NoteCard extends StatelessWidget {
     return OpenContainer(
       closedColor: getColor(rand),
       openColor: Colors.black,
-
       transitionType: ContainerTransitionType.fadeThrough,
-      transitionDuration: Duration(milliseconds: 350),
+      transitionDuration: const Duration(milliseconds: 350),
       closedShape:
           RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       openBuilder:
           (BuildContext context, void Function({Object? returnValue}) action) =>
-              NoteSceen(
+              NoteScreen(
         headingText: headline,
         bodyText: body,
       ),

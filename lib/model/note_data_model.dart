@@ -13,7 +13,6 @@ class Notes {
       required this.year,
       this.id,
       required this.heading,
-
       required this.body});
 
   Map<String, dynamic> toMap() {

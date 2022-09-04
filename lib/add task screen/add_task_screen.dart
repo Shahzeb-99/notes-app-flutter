@@ -1,11 +1,10 @@
-
 import 'package:flutter/material.dart';
 import 'package:notes_dev/data/note_data.dart';
 import 'package:notes_dev/model/note_data_model.dart';
 import 'package:provider/provider.dart';
 
 class AddTaskScreen extends StatefulWidget {
-  AddTaskScreen({Key? key}) : super(key: key);
+  const AddTaskScreen({Key? key}) : super(key: key);
 
   @override
   State<AddTaskScreen> createState() => _AddTaskScreenState();
@@ -87,7 +86,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                 headingText = newText;
               },
               maxLines: 2,
-              style: TextStyle(fontSize: 40, fontWeight: FontWeight.w600),
+              style: const TextStyle(fontSize: 40, fontWeight: FontWeight.w600),
               decoration: const InputDecoration(
                   border: InputBorder.none,
                   hintText: 'Title',
@@ -106,7 +105,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                     lastDate: DateTime(2100),
                   );
                   setState(() {
-                    dateTime=newDate!;
+                    dateTime = newDate!;
                   });
                 },
                 child: Text(
@@ -126,10 +125,10 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                 maxLines: null,
                 minLines: null,
                 expands: true,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 20,
                 ),
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     border: InputBorder.none,
                     hintText: 'Type Something...',
                     hintStyle: TextStyle(

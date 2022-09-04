@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors, unused_local_variable
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:notes_dev/data/note_data.dart';
@@ -10,7 +8,7 @@ import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final database = openDatabase(
+  openDatabase(
     join(await getDatabasesPath(), 'notes_database.db'),
     onCreate: (db, version) {
       return db.execute(
@@ -19,7 +17,6 @@ void main() async {
     },
     version: 1,
   );
-  print(await getDatabasesPath());
   runApp(const MyApp());
 }
 
@@ -28,14 +25,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
     return ChangeNotifierProvider(
-      create: (BuildContext context)  =>NotesData(),
+      create: (BuildContext context) => NotesData(),
       child: MaterialApp(
-
           theme: ThemeData.dark().copyWith(
-            scaffoldBackgroundColor: Color(0xFF252525),
-            floatingActionButtonTheme: FloatingActionButtonThemeData(
+            scaffoldBackgroundColor: const Color(0xFF252525),
+            floatingActionButtonTheme: const FloatingActionButtonThemeData(
                 backgroundColor: Colors.black, iconSize: 35),
             textTheme: GoogleFonts.openSansTextTheme(
               Theme.of(context).textTheme,
@@ -44,7 +39,7 @@ class MyApp extends StatelessWidget {
               displayColor: Colors.white,
             ),
           ),
-          home: HomeScreen()),
+          home: const HomeScreen()),
     );
   }
 }

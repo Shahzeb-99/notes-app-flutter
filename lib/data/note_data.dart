@@ -6,7 +6,7 @@ import 'package:sqflite/sqflite.dart';
 class NotesData extends ChangeNotifier {
   List<Notes> notes = [];
 
-  void addToList(Notes newNote){
+  void addToList(Notes newNote) {
     notes.add(newNote);
     notifyListeners();
   }
@@ -17,9 +17,7 @@ class NotesData extends ChangeNotifier {
     );
     final db = await database;
 
-
     final List<Map<String, dynamic>> maps = await db.query('notes');
-
 
     notes = List.generate(maps.length, (i) {
       notifyListeners();
@@ -30,7 +28,7 @@ class NotesData extends ChangeNotifier {
         year: maps[i]['year'],
         date: maps[i]['date'],
       );
-});
+    });
   }
 
   Future<void> insertNotes(Notes newNote) async {

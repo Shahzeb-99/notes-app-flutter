@@ -27,7 +27,7 @@ class NoteCard extends StatelessWidget {
     return OpenContainer(
       closedColor: getColor(rand),
       openColor: Colors.black,
-      middleColor: Colors.grey,
+
       transitionType: ContainerTransitionType.fadeThrough,
       transitionDuration: Duration(milliseconds: 350),
       closedShape:

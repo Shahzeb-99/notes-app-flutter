@@ -1,15 +1,22 @@
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:notes_dev/data/note_data.dart';
 import 'package:notes_dev/model/note_data_model.dart';
 import 'package:provider/provider.dart';
 
-class AddTaskScreen extends StatelessWidget {
+class AddTaskScreen extends StatefulWidget {
   AddTaskScreen({Key? key}) : super(key: key);
 
+  @override
+  State<AddTaskScreen> createState() => _AddTaskScreenState();
+}
+
+class _AddTaskScreenState extends State<AddTaskScreen> {
   String bodyText = '';
+
   String headingText = '';
+
+  DateTime dateTime = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +30,10 @@ class AddTaskScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                GestureDetector(onTap: (){Navigator.pop(context);},
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
                   child: Container(
                     height: 50,
                     width: 50,
@@ -41,16 +51,16 @@ class AddTaskScreen extends StatelessWidget {
                 GestureDetector(
                   onTap: () {
                     Notes newNotesObject = Notes(
-                        date: DateTime.now().day,
-                        month: DateTime.now().month,
-                        year: DateTime.now().year,
+                        date: dateTime.day,
+                        month: dateTime.month,
+                        year: dateTime.year,
                         heading: headingText,
                         body: bodyText);
-                    Provider.of<NotesData>(context,listen: false).addToList(newNotesObject);
-                    Provider.of<NotesData>(context,listen: false).insertNotes(newNotesObject);
+                    Provider.of<NotesData>(context, listen: false)
+                        .addToList(newNotesObject);
+                    Provider.of<NotesData>(context, listen: false)
+                        .insertNotes(newNotesObject);
                     Navigator.pop(context);
-                    
-
                   },
                   child: Container(
                     height: 50,
@@ -72,6 +82,7 @@ class AddTaskScreen extends StatelessWidget {
               height: 30,
             ),
             TextField(
+              autofocus: true,
               onChanged: (newText) {
                 headingText = newText;
               },
@@ -85,12 +96,26 @@ class AddTaskScreen extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Text(
-                getDateTime(DateTime.now()),
-                style: const TextStyle(
-                    color: Color(0x59FFFFFF),
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600),
+              child: GestureDetector(
+                onTap: () async {
+                  DateTime? newDate = await showDatePicker(
+                    context: context,
+                    initialDate: dateTime,
+                    initialDatePickerMode: DatePickerMode.day,
+                    firstDate: DateTime(2000),
+                    lastDate: DateTime(2100),
+                  );
+                  setState(() {
+                    dateTime=newDate!;
+                  });
+                },
+                child: Text(
+                  getDateTime(dateTime),
+                  style: const TextStyle(
+                      color: Color(0x59FFFFFF),
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600),
+                ),
               ),
             ),
             Expanded(

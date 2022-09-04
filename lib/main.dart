@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
             scaffoldBackgroundColor: Color(0xFF252525),
             floatingActionButtonTheme: FloatingActionButtonThemeData(
                 backgroundColor: Colors.black, iconSize: 35),
-            textTheme: GoogleFonts.montserratTextTheme(
+            textTheme: GoogleFonts.openSansTextTheme(
               Theme.of(context).textTheme,
             ).apply(
               bodyColor: Colors.white, //<-- SEE HERE

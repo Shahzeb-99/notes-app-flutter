@@ -63,11 +63,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   itemBuilder: (BuildContext context, int index) {
                     return NoteCard(
                       headline:
-                          Provider.of<NotesData>(context).notes[index].heading,
-                      day: Provider.of<NotesData>(context).notes[index].date,
-                      month: Provider.of<NotesData>(context).notes[index].month,
-                      year: Provider.of<NotesData>(context).notes[index].year,
-                      body: Provider.of<NotesData>(context).notes[index].body,
+                          Provider.of<NotesData>(context).notes[index].heading!,
+                      day: Provider.of<NotesData>(context).notes[index].date!,
+                      month: Provider.of<NotesData>(context).notes[index].month!,
+                      year: Provider.of<NotesData>(context).notes[index].year!,
+                      body: Provider.of<NotesData>(context).notes[index].body!,
                       rand: Random().nextInt(4),
                     );
                   },

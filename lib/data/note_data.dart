@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:notes_dev/model/note_data_model.dart';
-import 'package:path/path.dart';
-import 'package:sqflite/sqflite.dart';
+import '../model/database.dart';
 
 class NotesData extends ChangeNotifier {
   List<Notes> notes = [];
@@ -12,35 +11,17 @@ class NotesData extends ChangeNotifier {
   }
 
   Future<void> getNotes() async {
-    final database = openDatabase(
-      join(await getDatabasesPath(), 'notes_database.db'),
-    );
-    final db = await database;
+    final database = await $FloorAppDatabase.databaseBuilder('app_database.db').build();
+    final notedao = database.noteDao;
+    notes = await notedao.findAllNotes();
+    notifyListeners();
 
-    final List<Map<String, dynamic>> maps = await db.query('notes');
-
-    notes = List.generate(maps.length, (i) {
-      notifyListeners();
-      return Notes(
-        heading: maps[i]['heading'],
-        body: maps[i]['body'],
-        month: maps[i]['month'],
-        year: maps[i]['year'],
-        date: maps[i]['date'],
-      );
-    });
   }
 
   Future<void> insertNotes(Notes newNote) async {
-    final database = openDatabase(
-      join(await getDatabasesPath(), 'notes_database.db'),
-    );
+    final database = await $FloorAppDatabase.databaseBuilder('app_database.db').build();
+    await database.noteDao.insertNote(newNote);
+    notifyListeners();
 
-    final db = await database;
-    await db.insert(
-      'notes',
-      newNote.toMap(),
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
   }
 }

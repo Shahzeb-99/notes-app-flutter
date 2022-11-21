@@ -1,9 +1,10 @@
-import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:notes_dev/add%20task%20screen/add_task_screen.dart';
 import 'package:notes_dev/data/note_data.dart';
 import 'package:notes_dev/widgets/note_widget.dart';
 import 'package:provider/provider.dart';
+
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -49,29 +50,24 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             ),
+            const SizedBox(
+              height: 15,
+            ),
             Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(top: 55.0),
-                child: GridView.builder(
-                  shrinkWrap: true,
-                  physics: const ScrollPhysics(parent: BouncingScrollPhysics()),
-                  itemCount: Provider.of<NotesData>(context).notes.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 10,
-                      mainAxisSpacing: 10),
-                  itemBuilder: (BuildContext context, int index) {
-                    return NoteCard(
-                      headline:
-                          Provider.of<NotesData>(context).notes[index].heading!,
-                      day: Provider.of<NotesData>(context).notes[index].date!,
-                      month: Provider.of<NotesData>(context).notes[index].month!,
-                      year: Provider.of<NotesData>(context).notes[index].year!,
-                      body: Provider.of<NotesData>(context).notes[index].body!,
-                      rand: Random().nextInt(4),
-                    );
-                  },
-                ),
+              child: GridView.builder(
+                shrinkWrap: true,
+                physics: const ScrollPhysics(parent: BouncingScrollPhysics()),
+                itemCount: Provider.of<NotesData>(context).notes.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10),
+                itemBuilder: (BuildContext context, int index) {
+                  return NoteCard(
+                    index: index,
+                    id: Provider.of<NotesData>(context).notes[index].id!,
+                  );
+                },
               ),
             )
           ],

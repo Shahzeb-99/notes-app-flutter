@@ -10,6 +10,12 @@ abstract class NotesDao {
   @Query('SELECT * FROM Notes WHERE id = :id')
   Stream<Notes?> findNoteById(int id);
 
+
+  @Query('DELETE FROM User WHERE id = :id')
+  Future<void> deleteUserById(int id);
+
   @insert
   Future<void> insertNote(Notes note);
+
+
 }

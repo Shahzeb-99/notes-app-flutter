@@ -5,10 +5,7 @@ import '../model/database.dart';
 class NotesData extends ChangeNotifier {
   List<Notes> notes = [];
 
-  void addToList(Notes newNote) {
-    notes.add(newNote);
-    notifyListeners();
-  }
+
 
   Future<void> getNotes() async {
     final database = await $FloorAppDatabase.databaseBuilder('app_database.db').build();
@@ -21,6 +18,13 @@ class NotesData extends ChangeNotifier {
   Future<void> insertNotes(Notes newNote) async {
     final database = await $FloorAppDatabase.databaseBuilder('app_database.db').build();
     await database.noteDao.insertNote(newNote);
+    notifyListeners();
+
+  }
+  Future<void> deleteNote(int id) async {
+    final database = await $FloorAppDatabase.databaseBuilder('app_database.db').build();
+    final notedao = database.noteDao;
+    await notedao.deleteUserById(id);
     notifyListeners();
 
   }

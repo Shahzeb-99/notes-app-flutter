@@ -1,72 +1,86 @@
+import 'dart:math';
+
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
+import 'package:notes_dev/data/note_data.dart';
 import 'package:notes_dev/screens/note_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
-class NoteCard extends StatelessWidget {
-  final String headline;
-  final int rand;
-  final int day;
-  final int month;
-  final int year;
-  final String body;
+class NoteCard extends StatefulWidget {
+  final int id;
+  final int index;
 
-  const NoteCard(
-      {Key? key,
-      required this.headline,
-      required this.day,
-      required this.month,
-      required this.year,
-      required this.body,
-      required this.rand})
+  const NoteCard({Key? key, required this.index, required this.id})
       : super(key: key);
+
+  @override
+  State<NoteCard> createState() => _NoteCardState();
+}
+
+class _NoteCardState extends State<NoteCard> {
+  late Color widgetColor;
+
+  @override
+  void initState() {
+    widgetColor = getColor(
+      Random().nextInt(4),
+    );
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return OpenContainer(
-      closedColor: getColor(rand),
-      openColor: Colors.black,
+      closedColor: widgetColor,
+      openColor: const Color(0xFF252525),
       transitionType: ContainerTransitionType.fadeThrough,
-      transitionDuration: const Duration(milliseconds: 350),
-      closedShape:
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      transitionDuration: const Duration(milliseconds: 400),
+      closedShape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15),
+      ),
       openBuilder:
           (BuildContext context, void Function({Object? returnValue}) action) =>
               NoteScreen(
-        headingText: headline,
-        bodyText: body,
+        index: widget.index,
+        id: widget.id,
       ),
       closedBuilder: (BuildContext context, void Function() action) {
-        return Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
-            color: getColor(rand),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(15),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: Text(
-                    headline,
-                    softWrap: true,
-                    overflow: TextOverflow.clip,
-                    style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600),
-                  ),
-                ),
-                Text(
-                  '${getDateTime(month)} $day, $year',
+        return Padding(
+          padding: const EdgeInsets.all(15),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Text(
+                  Provider.of<NotesData>(context)
+                      .notes[widget.index]
+                      .heading!,
+                  softWrap: true,
+                  overflow: TextOverflow.fade,
                   style: const TextStyle(
-                      color: Colors.black38,
+                      color: Colors.black,
                       fontSize: 20,
                       fontWeight: FontWeight.w600),
-                )
-              ],
-            ),
+                ),
+              ),
+              Text(
+                DateFormat.yMMMEd().format(DateTime(
+                    Provider.of<NotesData>(context).notes[widget.index].year!,
+                    Provider.of<NotesData>(context)
+                        .notes[widget.index]
+                        .month!,
+                    Provider.of<NotesData>(context)
+                        .notes[widget.index]
+                        .date!)),
+                style: const TextStyle(
+
+                    color: Colors.black38,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600),
+              )
+            ],
           ),
         );
       },

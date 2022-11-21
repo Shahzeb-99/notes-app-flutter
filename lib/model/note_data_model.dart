@@ -5,7 +5,6 @@ class Notes {
 
   @PrimaryKey(autoGenerate: true)
   final int? id;
-
   final String? heading;
   final String? body;
   final int? date;
